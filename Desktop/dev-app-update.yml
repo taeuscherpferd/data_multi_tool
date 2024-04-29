@@ -1,0 +1,3 @@
+provider: generic
+url: https://example.com/auto-updates
+updaterCacheDirName: data_multi_tool-updater
