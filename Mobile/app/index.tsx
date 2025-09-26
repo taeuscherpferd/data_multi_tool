@@ -1,24 +1,23 @@
-import { Text, View } from "react-native";
-import {Header} from "@/components/header";
+import { Header } from "@/components/header";
+import { useTheme } from "@/utils/styles";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
+  const [theme] = useTheme();
+
   return (
-    <View style={styles.container} >
+    <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
       <Header />
-      <Text style={styles.textStyle}>Edit app/index.tsx to edit this screen.</Text>
+      <Text style={[styles.textStyle, { color: theme.textColor }]}>Edit app/index.tsx to edit this screen. BOOP</Text>
     </View>
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#000", // You can replace this with your theme color
   },
   textStyle: {
-    color: "#fff", // You can replace this with your theme color
-    fontSize: 16,
+    fontSize: 16
   }
-};
+});
