@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {useState, useEffect} from "react";
+import { useEffect, useState } from "react";
 
 interface ThemedValues {
   backgroundColor: string;
@@ -11,13 +11,13 @@ enum Themes {
   Dark = "dark",
 }
 
-export const useTheme =  () => {
+export const useTheme = (): [ThemedValues, (theme: Themes) => void] => {
   const [theme, setTheme] = useState<ThemedValues>(ThemeValues[Themes.Light]);
 
   useEffect(() => {
     (async () => {
       const currentTheme = await getTheme();
-      setThemeState(currentTheme);
+      setTheme(currentTheme);
     })();
   }, []);
 
@@ -26,7 +26,7 @@ export const useTheme =  () => {
     setTheme(ThemeValues[theme]);
   }
 
-  return [ theme, changeTheme ];
+  return [theme, changeTheme];
 }
 
 export const getTheme = async (override?: Themes) => {
@@ -34,7 +34,7 @@ export const getTheme = async (override?: Themes) => {
   return ThemeValues[override || theme];
 }
 
-export const setTheme = (theme: Themes) => {
+export const saveThemeToStorage = (theme: Themes) => {
   AsyncStorage.setItem("theme", theme);
 }
 

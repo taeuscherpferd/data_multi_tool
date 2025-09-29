@@ -3,7 +3,7 @@ import { useTheme } from "@/utils/styles";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
-  const [theme] = useTheme();
+  const theme = useTheme()[0];
 
   return (
     <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
