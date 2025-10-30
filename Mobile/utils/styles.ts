@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 interface ThemedValues {
   backgroundColor: string;
   textColor: string;
+  primaryColor?: string;
 }
 
 enum Themes {
@@ -42,9 +43,11 @@ const ThemeValues: Record<Themes, ThemedValues> = {
   light: {
     backgroundColor: "#FFF",
     textColor: "#000",
+    primaryColor: "#64ff98ff",
   },
   dark: {
     backgroundColor: "#000000",
     textColor: "#FFFFFF",
+    primaryColor: "#00852cff",
   },
 }
