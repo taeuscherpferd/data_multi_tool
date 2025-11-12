@@ -1,10 +1,7 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -20,45 +17,33 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
 
 .container {
-  margin: 0;
-  padding-top: 10vh;
+  height: 100vh;
+  width: 100vw;
+  gap: 0.25rem;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  align-items: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
-}
-
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
-}
-
-.row {
+.fileList {
+  width: 90%;
+  height: 40%;
+  background-color: #0f0f0f;
+  overflow: scroll;
+  border-radius: 0.5rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
-h1 {
-  text-align: center;
+  flex-direction: column;
 }
 
 input,
@@ -90,10 +75,6 @@ button:active {
 input,
 button {
   outline: none;
-}
-
-#greet-input {
-  margin-right: 5px;
 }
 
 @media (prefers-color-scheme: dark) {

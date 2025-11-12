@@ -1,50 +1,62 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
+import { open } from '@tauri-apps/plugin-dialog';
+import { readDir } from '@tauri-apps/plugin-fs';
+import { useState } from 'react';
 import "./App.css";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+const STORAGE_PATH = "/storage/emulated/0/Documents/docs/notes/data";
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
+function App() {
+  const [currentPath, setCurrentPath] = useState(STORAGE_PATH)
+  const [filesInDirectory, setFilesInDirectory] = useState<string[]>([]);
+
+  const onSelectProjectPress = async () => {
+    const directory = await open({
+      multiple: false,
+      directory: true,
+    })
+
+    console.log("Selected directory:", directory);
+  }
+
+  async function onReadFilesFromDirPress(): Promise<void> {
+    const entries = await readDir(currentPath)
+    const filePaths = entries.map((entry) => entry.name);
+
+    setFilesInDirectory(filePaths);
+  }
+
+  async function onDirectoryPress(dir: string): Promise<void> {
+    const unsafeNewPath = currentPath + "/" + dir
+
+    setCurrentPath(e => {
+      const safeNewPath = e + "/" + dir
+      return safeNewPath
+    });
+
+    const entries = await readDir(unsafeNewPath)
+    const filePaths = entries.map((entry) => entry.name);
+
+    setFilesInDirectory(filePaths);
   }
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <button onClick={onSelectProjectPress}>
+        {"Select Project"}
+      </button>
+      {"Text whoa, I'm in the movie!"}
+      <button onClick={onReadFilesFromDirPress}>
+        {"Read Files"}
+      </button>
+      <span>
+        {"Files in Directory:"}
+      </span>
+      <div className="fileList">
+        {filesInDirectory.map((file) => (
+          <button onClick={() => onDirectoryPress(file)} key={file}>{file}</button>
+        ))}
       </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+    </div>
   );
 }
 
