@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.card {
+  width: min(720px, 100%);
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: 0 20px 45px rgba(15, 15, 15, 0.08);
+}
+
+.statusList {
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+
+  dt {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6f6f6f;
+    margin: 0 0 0.15rem;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    color: #1f1f1f;
+    word-break: break-word;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  button {
+    flex: 1;
+    min-width: 180px;
+  }
+}
