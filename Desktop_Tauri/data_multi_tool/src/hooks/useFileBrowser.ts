@@ -3,7 +3,7 @@ import { open } from "@tauri-apps/plugin-dialog"
 import { readDir } from "@tauri-apps/plugin-fs"
 import { platform, type Platform } from "@tauri-apps/plugin-os"
 import { useCallback, useEffect, useState } from "react"
-import { setCurrentFilePath, setCurrentProjectPath } from "src/redux/slices/application"
+import { setCurrentProjectPath } from "src/redux/slices/application"
 import { useAppDispatch, useAppSelector } from "src/redux/store"
 
 export const ANDROID_STORAGE_PATH = "/storage/emulated/0/Documents/docs/notes/data"
@@ -84,7 +84,6 @@ export const useFileBrowser = (): UseFileBrowserResult => {
       }
 
       dispatch(setCurrentProjectPath(normalizedNext))
-      dispatch(setCurrentFilePath(null))
     },
     [currentProjectPath, dispatch],
   )
@@ -178,7 +177,6 @@ export const useFileBrowser = (): UseFileBrowserResult => {
         return { kind: "directory", path: entryPath }
       }
 
-      dispatch(setCurrentFilePath(entryPath))
       return { kind: "file", path: entryPath }
     },
     [currentProjectPath, dispatch, persistPath],

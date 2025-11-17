@@ -1,7 +1,7 @@
 import { createHashRouter } from "react-router-dom"
 import AppLayout from "src/layouts/AppLayout/AppLayout"
 import OpenFilePage from "src/pages/OpenFilePage/OpenFilePage"
-import SelectProjectPage from "src/pages/SelectProjectPage/SelectProjectPage"
+import { ProjectPage } from "src/pages/ProjectPage/ProjectPage"
 import SettingsPage from "src/pages/SettingsPage/SettingsPage"
 import StartPage from "src/pages/StartPage/StartPage"
 
@@ -15,11 +15,11 @@ export const appRouter = createHashRouter([
         element: <StartPage />,
       },
       {
-        path: "project/select",
-        element: <SelectProjectPage />,
+        path: "project/",
+        element: <ProjectPage />,
       },
       {
-        path: "project/open",
+        path: "project/:fileName",
         element: <OpenFilePage />,
       },
       {

@@ -1,34 +1,53 @@
+import { open } from "@tauri-apps/plugin-dialog"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAppSelector } from "src/redux/store"
+import { setCurrentProjectPath } from "src/redux/slices/application"
+import { useAppDispatch, useAppSelector } from "src/redux/store"
 import styles from "./StartPage.module.scss"
 
 const StartPage = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const currentProjectPath = useAppSelector((state) => state.applicationReducer.currentProjectPath)
-  const activeFilePath = useAppSelector((state) => state.applicationReducer.currentFilePath)
+
+  useEffect(() => {
+    if (currentProjectPath) {
+      navigate("/project/")
+    }
+  })
+
+  const onOpenProject = async () => {
+    const selectedProjectPath = await open({
+      multiple: false,
+      directory: true,
+      title: "Select Project Directory",
+    })
+
+    dispatch(setCurrentProjectPath(selectedProjectPath))
+    navigate("/project/")
+  }
+
+  const onCreateNewProject = () => {
+    throw new Error("Not implemented yet")
+  }
 
   return (
     <section className={styles.container}>
       <div className={styles.card}>
-        <h2>Welcome</h2>
+        <h2>{"Welcome!"}</h2>
         <p>
-          Choose a project workspace to browse its files, open documents, and configure the experience. You can come back to this
-          page anytime for quick navigation shortcuts.
+          {"Choose a project to open."}
         </p>
-        <dl className={styles.statusList}>
+        <div className={styles.statusList}>
           <div>
-            <dt>Current project</dt>
+            <dt>{"Recent projects:"}</dt>
             <dd>{currentProjectPath ?? "Not selected yet"}</dd>
           </div>
-          <div>
-            <dt>Active file</dt>
-            <dd>{activeFilePath ?? "Open a file from the browser"}</dd>
-          </div>
-        </dl>
+        </div>
         <div className={styles.actions}>
-          <button type="button" onClick={() => navigate("/project/select")}>Browse Projects</button>
-          <button type="button" onClick={() => navigate("/project/open")} disabled={!activeFilePath}>
-            Go to Open File View
+          <button type="button" onClick={onOpenProject}>{"Open a Project"}</button>
+          <button type="button" onClick={onCreateNewProject}>
+            {"Create a New Project"}
           </button>
         </div>
       </div>

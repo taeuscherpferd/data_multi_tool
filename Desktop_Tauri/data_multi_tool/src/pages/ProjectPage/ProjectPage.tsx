@@ -2,12 +2,16 @@ import { ChangeEvent, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { FileEntryList } from "src/components/FileEntryList/FileEntryList"
 import { useFileBrowser } from "src/hooks/useFileBrowser"
-import styles from "./SelectProjectPage.module.scss"
+import { setCurrentProjectPath } from "src/redux/slices/application"
+import { useAppDispatch } from "src/redux/store"
+import styles from "./ProjectPage.module.scss"
 
-const SelectProjectPage = () => {
-  const navigate = useNavigate()
+export const ProjectPage = () => {
   const { currentPath, entries, loading, errorMessage, selectProjectFolder, refreshEntries, openEntry, goUpOneLevel } = useFileBrowser()
   const [searchQuery, setSearchQuery] = useState("")
+
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const filteredEntries = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase()
@@ -21,6 +25,12 @@ const SelectProjectPage = () => {
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value)
+  }
+
+  const onCloseProject = async () => {
+    dispatch(setCurrentProjectPath(null))
+    navigate("/")
+    console.log("Project closed")
   }
 
   const handleEntryClick = async (entry: (typeof entries)[number]) => {
@@ -45,8 +55,8 @@ const SelectProjectPage = () => {
           <button type="button" onClick={goUpOneLevel} disabled={!currentPath}>
             Up One Level
           </button>
-          <button type="button" onClick={refreshEntries} disabled={!currentPath}>
-            Refresh
+          <button type="button" onClick={onCloseProject}>
+            {"Close"}
           </button>
         </div>
       </header>
@@ -77,4 +87,3 @@ const SelectProjectPage = () => {
   )
 }
 
-export default SelectProjectPage
