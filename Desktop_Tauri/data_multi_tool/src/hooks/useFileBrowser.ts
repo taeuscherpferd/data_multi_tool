@@ -74,19 +74,16 @@ export const useFileBrowser = (): UseFileBrowserResult => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [platformName] = useState<Platform>(() => platform())
 
-  const persistPath = useCallback(
-    (nextPath: string | null) => {
-      const normalizedNext = normalizePathValue(nextPath)
-      const normalizedCurrent = normalizePathValue(currentProjectPath)
+  const persistPath = useCallback((nextPath: string | null) => {
+    const normalizedNext = normalizePathValue(nextPath)
+    const normalizedCurrent = normalizePathValue(currentProjectPath)
 
-      if (normalizedNext === normalizedCurrent) {
-        return
-      }
+    if (normalizedNext === normalizedCurrent) {
+      return
+    }
 
-      dispatch(setCurrentProjectPath(normalizedNext))
-    },
-    [currentProjectPath, dispatch],
-  )
+    dispatch(setCurrentProjectPath(normalizedNext))
+  }, [currentProjectPath, dispatch])
 
   const readEntries = useCallback(async (pathToRead: string) => {
     setLoading(true)

@@ -32,7 +32,7 @@ const StartPage = () => {
   }
 
   return (
-    <section className={styles.container}>
+    <div className={styles.container}>
       <div className={styles.card}>
         <h2>{"Welcome!"}</h2>
         <p>
@@ -51,7 +51,7 @@ const StartPage = () => {
           </button>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 

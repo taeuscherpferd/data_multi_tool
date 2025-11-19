@@ -4,9 +4,9 @@ import styles from "./AppLayout.module.scss"
 const AppLayout = () => {
   return (
     <div className={styles.layout}>
-      <main className={styles.content}>
+      <div className={styles.content}>
         <Outlet />
-      </main>
+      </div>
     </div>
   )
 }
