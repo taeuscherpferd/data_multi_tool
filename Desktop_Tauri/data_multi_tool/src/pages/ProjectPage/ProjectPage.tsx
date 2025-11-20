@@ -1,14 +1,16 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { FileEntryList } from "src/components/FileEntryList/FileEntryList"
+import { FileTree } from "src/components/FileTree/FileTree"
 import { HeaderWithSearch } from "src/components/HeaderWithSearch/HeaderWithSearch"
 import { useFileBrowser } from "src/hooks/useFileBrowser"
+import { useReturnToHomeIfNoProj } from "src/hooks/useReturnToHomeIfNoProj"
 import { setCurrentProjectPath } from "src/redux/slices/application"
 import { useAppDispatch } from "src/redux/store"
 import styles from "./ProjectPage.module.scss"
 
 export const ProjectPage = () => {
-  const { currentPath, entries, loading, openEntry, goUpOneLevel } = useFileBrowser()
+  useReturnToHomeIfNoProj()
+  const { currentPath, entries, loading, openEntry, errorMessage, refreshEntries } = useFileBrowser()
   const [searchQuery, setSearchQuery] = useState("")
 
   const currentDirectory = currentPath?.slice(currentPath?.lastIndexOf("/") + 1)
@@ -33,10 +35,9 @@ export const ProjectPage = () => {
   const onCloseProject = async () => {
     dispatch(setCurrentProjectPath(null))
     navigate("/")
-    console.log("Project closed")
   }
 
-  const handleEntryClick = async (entry: (typeof entries)[number]) => {
+  const handleFileClick = async (entry: (typeof entries)[number]) => {
     const result = await openEntry(entry)
 
     if (result?.kind === "file") {
@@ -50,8 +51,8 @@ export const ProjectPage = () => {
         <span className={styles.projectName}>{currentDirectory}</span>
         <HeaderWithSearch searchQuery={searchQuery} onSearchChange={handleSearchChange} />
         <div className={styles.toolbarActions}>
-          <button type="button" onClick={goUpOneLevel} disabled={!currentPath}>
-            Up One Level
+          <button type="button" onClick={() => void refreshEntries()} disabled={!currentPath}>
+            {"Refresh"}
           </button>
           <button type="button" onClick={onCloseProject}>
             {"Close"}
@@ -59,12 +60,15 @@ export const ProjectPage = () => {
         </div>
       </header>
 
+      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+
       <div className={styles.listPanel}>
-        <FileEntryList
+        <FileTree
+          rootPath={currentPath}
           entries={filteredEntries}
           loading={loading}
           emptyMessage={searchQuery ? "No matches for this search" : "This directory is empty"}
-          onEntryClick={handleEntryClick}
+          onFileSelect={handleFileClick}
         />
       </div>
     </div>

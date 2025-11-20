@@ -1,0 +1,59 @@
+.treeContainer {
+  width: 100%;
+}
+
+.nodeList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.nodeRow {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+
+.fileButton {
+  color: #374151;
+}
+
+.chevron {
+  width: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.nodeName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileBullet {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background-color: #9ca3af;
+  margin-left: 0.25rem;
+}
+
+.childContainer {
+  margin-left: 0.75rem;
+  border-left: 1px solid #e5e7eb;
+  padding-left: 0.75rem;
+}
+
+.stateMessage {
+  color: #6b7280;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.errorMessage {
+  color: #991b1b;
+  background-color: #fee2e2;
+  border-radius: 0.35rem;
+}
