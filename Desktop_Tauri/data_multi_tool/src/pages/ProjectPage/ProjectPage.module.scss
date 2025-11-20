@@ -4,6 +4,7 @@
   flex: 1;
   flex-direction: column;
   overflow: hidden;
+  gap: 0.5rem;
 }
 
 .toolbar {
@@ -16,9 +17,12 @@
 
 .listPanel {
   display: flex;
+  flex: 1;
   background-color: #fefefe;
-  padding: 0.5rem;
+  padding: 0.75rem;
   overflow: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
 }
 
 .projectName {
