@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from "react"
 import { readDir } from "@tauri-apps/plugin-fs"
+import { useCallback, useEffect, useState } from "react"
+import { DirectoryButton } from "src/components/FileTreeButtons/DirectoryButton/DirectoryButton"
+import { FileButton } from "src/components/FileTreeButtons/FileButton/FileButton"
 import { composeChildPath, sortEntries, type FileBrowserEntry } from "src/hooks/useFileBrowser"
 import styles from "./FileTree.module.scss"
 
@@ -63,7 +65,7 @@ export const FileTree = ({
 
     try {
       const entriesInDirectory = await readDir(directory.path)
-      const mappedEntries = entriesInDirectory.map<FileBrowserEntry>((entry) => ({
+      const mappedEntries = entriesInDirectory.filter(x => x.isDirectory || x.name.endsWith(".csv")).map<FileBrowserEntry>((entry) => ({
         name: entry.name,
         isDirectory: entry.isDirectory,
         isFile: entry.isFile,
@@ -111,47 +113,37 @@ export const FileTree = ({
           const isLoading = loadingByPath.has(entry.path)
           const childEntries = childrenByPath[entry.path] ?? []
           const errorMessage = errorsByPath[entry.path]
+          let childContent = null
+
+          if (isLoading) {
+            childContent = <div className={styles.stateMessage}>{"Loading…"}</div>
+          } else if (errorMessage) {
+            childContent = (
+              <div className={`${styles.stateMessage} ${styles.errorMessage}`}>{errorMessage}</div>
+            )
+          } else if (childEntries.length === 0) {
+            childContent = <div className={styles.stateMessage}>{"This directory is empty"}</div>
+          } else {
+            childContent = renderChildren(childEntries, depth + 1)
+          }
 
           return (
             <li key={entry.path}>
-              <div className={styles.nodeRow} style={{ paddingLeft: `${depth * 0.75}rem` }}>
+              <div className={styles.nodeRow} style={{ paddingLeft: `${depth * 0.15}rem` }}>
                 {entry.isDirectory ? (
-                  <button
-                    type="button"
-                    className={styles.directoryButton}
-                    onClick={() => void handleDirectoryClick(entry)}
-                    aria-expanded={isExpanded}
-                    aria-label={`${isExpanded ? "Collapse" : "Expand"} directory ${entry.name}`}
-                  >
-                    <span className={styles.chevron} aria-hidden>
-                      {isExpanded ? "▾" : "▸"}
-                    </span>
-                    <span className={styles.nodeName}>{entry.name}</span>
-                  </button>
+                  <DirectoryButton
+                    entry={entry}
+                    isExpanded={isExpanded}
+                    handleDirectoryClick={handleDirectoryClick}
+                  />
                 ) : (
-                  <button
-                    type="button"
-                    className={styles.fileButton}
-                    onClick={() => onFileSelect(entry)}
-                    aria-label={`Open file ${entry.name}`}
-                  >
-                    <span className={styles.fileBullet} aria-hidden />
-                    <span className={styles.nodeName}>{entry.name}</span>
-                  </button>
+                  <FileButton entry={entry} onFileSelect={onFileSelect} />
                 )}
               </div>
 
               {entry.isDirectory && isExpanded && (
                 <div className={styles.childContainer}>
-                  {isLoading ? (
-                    <div className={styles.stateMessage}>Loading…</div>
-                  ) : errorMessage ? (
-                    <div className={`${styles.stateMessage} ${styles.errorMessage}`}>{errorMessage}</div>
-                  ) : childEntries.length === 0 ? (
-                    <div className={styles.stateMessage}>This directory is empty</div>
-                  ) : (
-                    renderChildren(childEntries, depth + 1)
-                  )}
+                  {childContent}
                 </div>
               )}
             </li>
@@ -163,11 +155,11 @@ export const FileTree = ({
   )
 
   if (!rootPath) {
-    return <div className={styles.stateMessage}>Select a project directory to browse files.</div>
+    return <div className={styles.stateMessage}>{"Select a project directory to browse files."}</div>
   }
 
   if (loading) {
-    return <div className={styles.stateMessage}>Loading files…</div>
+    return <div className={styles.stateMessage}>{"Loading files…"}</div>
   }
 
   if (entries.length === 0) {

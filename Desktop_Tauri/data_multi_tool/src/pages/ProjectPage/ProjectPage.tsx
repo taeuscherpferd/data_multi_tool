@@ -1,13 +1,15 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { FileTree } from "src/components/FileTree/FileTree"
 import { HeaderWithSearch } from "src/components/HeaderWithSearch/HeaderWithSearch"
 import { useFileBrowser } from "src/hooks/useFileBrowser"
+import { useReturnToHomeIfNoProj } from "src/hooks/useReturnToHomeIfNoProj"
 import { setCurrentProjectPath } from "src/redux/slices/application"
 import { useAppDispatch } from "src/redux/store"
-import { FileTree } from "src/components/FileTree/FileTree"
 import styles from "./ProjectPage.module.scss"
 
 export const ProjectPage = () => {
+  useReturnToHomeIfNoProj()
   const { currentPath, entries, loading, openEntry, errorMessage, refreshEntries } = useFileBrowser()
   const [searchQuery, setSearchQuery] = useState("")
 
@@ -33,7 +35,6 @@ export const ProjectPage = () => {
   const onCloseProject = async () => {
     dispatch(setCurrentProjectPath(null))
     navigate("/")
-    console.log("Project closed")
   }
 
   const handleFileClick = async (entry: (typeof entries)[number]) => {
@@ -51,7 +52,7 @@ export const ProjectPage = () => {
         <HeaderWithSearch searchQuery={searchQuery} onSearchChange={handleSearchChange} />
         <div className={styles.toolbarActions}>
           <button type="button" onClick={() => void refreshEntries()} disabled={!currentPath}>
-            Refresh
+            {"Refresh"}
           </button>
           <button type="button" onClick={onCloseProject}>
             {"Close"}

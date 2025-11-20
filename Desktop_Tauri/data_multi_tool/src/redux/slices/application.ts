@@ -2,7 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { platform } from "@tauri-apps/plugin-os"
 import { ANDROID_STORAGE_PATH } from "src/hooks/useFileBrowser"
 
-const currentPlatform = platform()
+let currentPlatform = "web"
+if (window && (window as any).__TAURI_IPC__) {
+  currentPlatform = platform()
+}
 
 type ApplicationState = {
   currentProjectPath: string | null

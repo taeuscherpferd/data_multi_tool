@@ -91,7 +91,7 @@ export const useFileBrowser = (): UseFileBrowserResult => {
 
     try {
       const result = await readDir(pathToRead)
-      const mappedEntries = result.map<FileBrowserEntry>((entry) => ({
+      const mappedEntries = result.filter(x => x.isDirectory || x.name.endsWith(".csv")).map<FileBrowserEntry>((entry) => ({
         name: entry.name,
         isDirectory: entry.isDirectory,
         isFile: entry.isFile,
