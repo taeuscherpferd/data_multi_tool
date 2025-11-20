@@ -41,7 +41,7 @@ const normalizePathValue = (value: string | null | undefined): string | null => 
   return value
 }
 
-const composeChildPath = (parent: string, child: string): string => {
+export const composeChildPath = (parent: string, child: string): string => {
   if (!parent) {
     return child
   }
@@ -56,7 +56,7 @@ const composeChildPath = (parent: string, child: string): string => {
   return `${trimmedParent}${separator}${child}`
 }
 
-const sortEntries = (entries: FileBrowserEntry[]): FileBrowserEntry[] => {
+export const sortEntries = (entries: FileBrowserEntry[]): FileBrowserEntry[] => {
   return [...entries].sort((a, b) => {
     if (a.isDirectory !== b.isDirectory) {
       return a.isDirectory ? -1 : 1
