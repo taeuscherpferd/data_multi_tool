@@ -15,6 +15,7 @@ const OpenedTablePage = () => {
         <div>
           <p className={styles.label}>{projName}</p>
         </div>
+        <button>⏹</button>
       </header>
 
       <div className={styles.editorShell}>

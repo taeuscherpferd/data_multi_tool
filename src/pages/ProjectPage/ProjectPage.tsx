@@ -41,7 +41,8 @@ export const ProjectPage = () => {
     const result = await openEntry(entry)
 
     if (result?.kind === "file") {
-      navigate("/project/open")
+      const fileName = result.path.slice(result.path.lastIndexOf("/") + 1)
+      navigate(`/project/${fileName}`)
     }
   }
 
