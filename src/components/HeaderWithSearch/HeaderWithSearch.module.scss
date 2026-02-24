@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff;
   min-height: 4rem;
   width: 100%;
   flex: 1;
@@ -14,8 +13,8 @@
   flex: 1;
   padding: 0.6em 1em;
   border-radius: 0.5rem;
-  background-color: #fefefe;
-  color: black;
+  background-color: var(--primary-input-color);
+  color: var(--primary-text-color);
   width: 0;
   height: 80%;
   font: inherit;

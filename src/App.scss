@@ -3,7 +3,7 @@
 *::after {
   box-sizing: border-box;
 }
-$deep-twilight: #03045eff;
+$deep-twilight: rgb(0, 1, 56);
 $french-blue: #023e8aff;
 $bright-teal-blue: #0077b6ff;
 $blue-green: #0096c7ff;
@@ -19,9 +19,6 @@ $light-cyan: #caf0f8ff;
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: #2f2f2f;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,13 +26,18 @@ $light-cyan: #caf0f8ff;
   -webkit-text-size-adjust: 100%;
   overflow: hidden;
 
-  --primary-color: #{$french-blue};
+  --primary-color: rgb(0, 140, 255);
   --secondary-color: #{$blue-green};
-  --primary-background-color: #{$light-cyan};
+  --primary-background-color: rgb(249, 254, 255);
   --primary-shadow-color: #{$deep-twilight};
+  --primary-input-color: rgb(249, 254, 255);
   --primary-text-color: #000;
   --primary-icon-color: #000;
+  --primary-button-text-color: rgb(249, 254, 255);
   --secondary-icon-color: #aaaaaa;
+
+  color: var(--primary-text-color);
+  background-color: var(--primary-background-color);
 }
 
 body {
@@ -65,7 +67,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: var(--primary-text-color);
+  color: var(--primary-button-text-color);
   background-color: var(--primary-color);
   transition: border-color 0.25s;
   box-shadow: 0 2px 2px var(--primary-shadow-color);
@@ -89,29 +91,31 @@ button {
   outline: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
+// TODO: Enable this later
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     color: #f6f6f6;
 
-    --primary-text-color: #fafafa;
-    --primary-color: #{$turquoise-surf};
-    --secondary-color: #{$french-blue};
-    --primary-background-color: #{$deep-twilight};
-    --primary-shadow-color: #{$deep-twilight};
-    --primary-icon-color: #fafafa;
-    --secondary-icon-color: #aaaaaa;
-  }
+//     --primary-text-color: #fafafa;
+//     --primary-color: #{$turquoise-surf};
+//     --secondary-color: #{$french-blue};
+//     --primary-background-color: #{$deep-twilight};
+//     --primary-shadow-color: #{$deep-twilight};
+//     --primary-icon-color: #{$light-cyan};
+//     --secondary-icon-color: #aaaaaa;
+//     --primary-input-color: #010013;
+//   }
 
-  a:hover {
-    color: #24c8db;
-  }
+//   a:hover {
+//     color: #24c8db;
+//   }
 
-  input,
-  button {
-    color: var(--primary-text-color);
-    background-color: var(--primary-color);
-  }
-  button:active {
-    background-color: var(--secondary-color);
-  }
-}
+//   input,
+//   button {
+//     color: var(--primary-text-color);
+//     background-color: var(--primary-color);
+//   }
+//   button:active {
+//     background-color: var(--secondary-color);
+//   }
+// }
