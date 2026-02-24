@@ -1,0 +1,17 @@
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  background-color: transparent;
+  color: var(--primary-icon-color);
+  box-shadow: none;
+  transition: none;
+}
+
+.iconButton:hover {
+  outline: none;
+  border: none;
+}

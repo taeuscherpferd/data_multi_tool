@@ -3,6 +3,15 @@
 *::after {
   box-sizing: border-box;
 }
+$deep-twilight: #03045eff;
+$french-blue: #023e8aff;
+$bright-teal-blue: #0077b6ff;
+$blue-green: #0096c7ff;
+$turquoise-surf: #00b4d8ff;
+$sky-aqua: #48cae4ff;
+$frosted-blue: #90e0efff;
+$frosted-blue-2: #ade8f4ff;
+$light-cyan: #caf0f8ff;
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -19,7 +28,16 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   overflow: hidden;
+
+  --primary-color: #{$french-blue};
+  --secondary-color: #{$blue-green};
+  --primary-background-color: #{$light-cyan};
+  --primary-shadow-color: #{$deep-twilight};
+  --primary-text-color: #000;
+  --primary-icon-color: #000;
+  --secondary-icon-color: #aaaaaa;
 }
+
 body {
   height: 100%;
   width: 100%;
@@ -47,10 +65,10 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
+  color: var(--primary-text-color);
+  background-color: var(--primary-color);
   transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px var(--primary-shadow-color);
 }
 
 button {
@@ -58,12 +76,12 @@ button {
 }
 
 button:hover {
-  border-color: #396cd8;
+  border-color: var(--primary-color);
 }
 
 button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
+  border-color: var(--primary-color);
+  background-color: var(--primary-background-color);
 }
 
 input,
@@ -74,6 +92,14 @@ button {
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f6f6f6;
+
+    --primary-text-color: #fafafa;
+    --primary-color: #{$turquoise-surf};
+    --secondary-color: #{$french-blue};
+    --primary-background-color: #{$deep-twilight};
+    --primary-shadow-color: #{$deep-twilight};
+    --primary-icon-color: #fafafa;
+    --secondary-icon-color: #aaaaaa;
   }
 
   a:hover {
@@ -82,10 +108,10 @@ button {
 
   input,
   button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
+    color: var(--primary-text-color);
+    background-color: var(--primary-color);
   }
   button:active {
-    background-color: #0f0f0f69;
+    background-color: var(--secondary-color);
   }
 }

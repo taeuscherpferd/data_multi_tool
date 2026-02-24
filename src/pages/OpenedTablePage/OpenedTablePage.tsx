@@ -1,7 +1,9 @@
-import { BsLayoutSidebar } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
-import { useAppSelector } from "src/redux/store"
-import styles from "./OpenedTablePage.module.scss"
+import { GiHamburgerMenu } from "react-icons/gi";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { IconButton } from "src/components/IconButton/IconButton";
+import { useAppSelector } from "src/redux/store";
+import styles from "./OpenedTablePage.module.scss";
 
 const OpenedTablePage = () => {
   const navigate = useNavigate()
@@ -11,15 +13,10 @@ const OpenedTablePage = () => {
   return (
     <section className={styles.wrapper}>
       <header className={styles.header}>
-        <button type="button" className={styles.backButton} onClick={() => navigate(-1)}><BsLayoutSidebar /></button>
-        <div>
-          <p className={styles.label}>{projName}</p>
-        </div>
-        <button>⏹</button>
+        <IconButton icon={<MdOutlineArrowBackIosNew size={20} />} onClick={() => navigate(-1)} />
+        <p className={styles.label}>{projName}</p>
+        <IconButton icon={<GiHamburgerMenu size={20} />} />
       </header>
-
-      <div className={styles.editorShell}>
-      </div>
     </section>
   )
 }
