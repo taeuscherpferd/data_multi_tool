@@ -1,5 +1,4 @@
 import { open } from "@tauri-apps/plugin-dialog"
-import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { setCurrentProjectPath } from "src/redux/slices/application"
 import { useAppDispatch, useAppSelector } from "src/redux/store"
@@ -9,12 +8,6 @@ const StartPage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const currentProjectPath = useAppSelector((state) => state.applicationReducer.currentProjectPath)
-
-  useEffect(() => {
-    if (currentProjectPath) {
-      navigate("/project/")
-    }
-  })
 
   const onOpenProject = async () => {
     const selectedProjectPath = await open({
